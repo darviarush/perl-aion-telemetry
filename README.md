@@ -1,4 +1,4 @@
-[![Actions Status](https://github.com/darviarush/perl-aion-telemetry/actions/workflows/test.yml/badge.svg)](https://github.com/darviarush/perl-aion-telemetry/actions)
+[![Actions Status](https://github.com/darviarush/perl-aion-telemetry/actions/workflows/test.yml/badge.svg)](https://github.com/darviarush/perl-aion-telemetry/actions) [![MetaCPAN Release](https://badge.fury.io/pl/Aion-Telemetry.svg)](https://metacpan.org/release/Aion-Telemetry)
 # NAME
 
 Aion::Telemetry - measures the time the program runs between specified points
