@@ -1,61 +1,117 @@
 # NAME
 
-Aion::Telemetry - .
+Aion::Telemetry - measures the time the program runs between specified points
 
 # VERSION
 
-0.0.0-prealpha
+0.0.1
 
 # SYNOPSIS
 
 ```perl
 use Aion::Telemetry;
 
-my $aion_telemetry = Aion::Telemetry->new();
+my $mark = refmark;
 
-$aion_telemetry  # -> 1
+my $sum = 0;
+$sum += $_ for 1 .. 1000;
+
+undef $mark;
+
+my $s = << 'END';
+Ref Report -- Total time: 0.\d+ ms
+   Count          Time  Percent  Interval
+----------------------------------------------
+       1  0.\d+ ms  100.00%  main::__ANON__
+END
+
+refreport 1  # ~> $s
 ```
 
 # DESCRIPTION
 
-Aion::Telemetry — .
+Telemetry measures the time a program runs between specified points.
+Time inside subsegments is not taken into account!
 
-# SUBROUTINES/METHODS
+# SUBROUTINES
 
-## 
+## refmark (;$mark)
 
-.
+Creates a reference point.
 
 ```perl
-my $aion_telemetry = Aion::Telemetry->new();
+my $reper1 = refmark "main";
 
-$aion_telemetry  # -> 1
+select(undef, undef, undef, .05);
+
+my $reper2 = refmark "reper2";
+select(undef, undef, undef, .2);
+undef $reper2;
+
+select(undef, undef, undef, .05);
+
+my $reper3 = refmark "reper2";
+select(undef, undef, undef, .1);
+undef $reper3;
+
+select(undef, undef, undef, .1);
+
+undef $reper1;
+
+# report:
+sub round ($) { int($_[0]*10 + .5) / 10 }
+
+my ($report, $total) = refreport;
+
+$total   # -> $report->[0]{interval} + $report->[1]{interval}
+
+scalar @$report     # -> 2
+round $total        # -> 0.5
+
+$report->[0]{mark}            # => reper2
+$report->[0]{count}           # -> 2
+round $report->[0]{interval}  # -> 0.3
+round $report->[0]{percent}   # -> 60.0
+
+$report->[1]{mark}            # => main
+$report->[1]{count}           # -> 1
+round $report->[1]{interval}  # -> 0.2
+round $report->[1]{percent}   # -> 40.0
 ```
 
-# INSTALL
+## refreport (;$clean)
 
-Add to **cpanfile** in your project:
+Make a report on reference points.
 
-```cpanfile
-requires 'Aion::Telemetry',
-    git => 'https://github.com/darviarush/perl-aion-telemetry.git',
-    ref => 'master',
-;
+Parameter `$clean == 1` clean the report.
+
+```perl
+my $s = refreport;
+refreport 0  # -> $s
+refreport 1  # -> $s
+
+$s = << 'END';
+Ref Report -- Total time: 0.000000 mks
+   Count          Time  Percent  Interval
+----------------------------------------------
+END
+
+refreport    # -> $s
 ```
 
-And run command:
+# SEE ALSO
 
-```sh
-$ sudo cpm install -gvv
-```
+* `Telemetry::Any`
+* `Devel::Timer`
 
 # AUTHOR
 
-Yaroslav O. Kosmina [dart@cpan.org](mailto:dart@cpan.org)
+Yaroslav O. Kosmina [dart@cpan.org](dart@cpan.org)
 
-# COPYRIGHT AND LICENSE
-This software is copyright (c) 2023 by Yaroslav O. Kosmina.
-
-This is free software; you can redistribute it and/or modify it under the same terms as the Perl 5 programming language system itself.
+# LICENSE
 
 ⚖ **GPLv3**
+
+# COPYRIGHT
+
+Aion::Telemetry is copyright © 2023 by Yaroslav O. Kosmina. Rusland. All rights reserved.
