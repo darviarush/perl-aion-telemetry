@@ -1,10 +1,11 @@
+[![Actions Status](https://github.com/darviarush/perl-aion-telemetry/actions/workflows/test.yml/badge.svg)](https://github.com/darviarush/perl-aion-telemetry/actions)
 # NAME
 
 Aion::Telemetry - measures the time the program runs between specified points
 
 # VERSION
 
-0.0.0-prealpha
+0.0.1
 
 # SYNOPSIS
 
@@ -64,8 +65,6 @@ sub round ($) { int($_[0]*10 + .5) / 10 }
 my ($report, $total) = refreport;
 
 $total   # -> $report->[0]{interval} + $report->[1]{interval}
-
-use DDP; p $report; p $total;
 
 scalar @$report     # -> 2
 round $total        # -> 0.5

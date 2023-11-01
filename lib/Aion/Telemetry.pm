@@ -3,7 +3,7 @@ use 5.22.0;
 no strict; no warnings; no diagnostics;
 use common::sense;
 
-our $VERSION = "0.0.0-prealpha";
+our $VERSION = "0.0.1";
 
 use List::Util qw/sum/;
 use Time::HiRes qw//;
@@ -94,7 +94,7 @@ Aion::Telemetry - measures the time the program runs between specified points
 
 =head1 VERSION
 
-0.0.0-prealpha
+0.0.1
 
 =head1 SYNOPSIS
 
@@ -151,8 +151,6 @@ Creates a reference point.
 	my ($report, $total) = refreport;
 	
 	$total   # -> $report->[0]{interval} + $report->[1]{interval}
-	
-	use DDP; p $report; p $total;
 	
 	scalar @$report     # -> 2
 	round $total        # -> 0.5

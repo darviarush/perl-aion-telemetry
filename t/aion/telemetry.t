@@ -4,7 +4,7 @@ use common::sense; use open qw/:std :utf8/; use Test::More 0.98; sub _mkpath_ { 
 # 
 # # VERSION
 # 
-# 0.0.0-prealpha
+# 0.0.1
 # 
 # # SYNOPSIS
 # 
@@ -64,8 +64,6 @@ sub round ($) { int($_[0]*10 + .5) / 10 }
 my ($report, $total) = refreport;
 
 ::is scalar do {$total}, scalar do{$report->[0]{interval} + $report->[1]{interval}}, '$total   # -> $report->[0]{interval} + $report->[1]{interval}';
-
-use DDP; p $report; p $total;
 
 ::is scalar do {scalar @$report}, scalar do{2}, 'scalar @$report     # -> 2';
 ::is scalar do {round $total}, scalar do{0.5}, 'round $total        # -> 0.5';
